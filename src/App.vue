@@ -6,7 +6,7 @@
         <main>
             <div class="wrapper">
                 <div class="left-block">
-                    <messages-list v-for="(message, index) in data" :message="message" :index="index" :key="message.uid"></messages-list>
+                    <messages-list v-for="(message, index) in data" :message="message" :index="index" :key="message.uid" :senderUid="currentMessageUid"></messages-list>
                 </div>
                 <div class="right-block">
                     <router-view v-if="data.length"></router-view>
@@ -26,7 +26,11 @@ export default {
     name: 'app',
     computed: {
         data() {
-            return this.$store.state.messages
+            return this.$store.state.messages;
+        },
+
+        currentMessageUid() {
+            return this.$store.state.currentSender.uid;
         }
     },
     components: {
@@ -50,12 +54,12 @@ body {
 }
 
 .left-block {
-    flex: 25%;
+    flex: 30%;
 }
 
 .right-block {
     margin-right: 10px;
-    flex: 75%;
+    flex: 70%;
 }
 
 .wrapper {
@@ -73,7 +77,7 @@ body {
 }
 
 main {
-    margin-top: 40px;
+    margin-top: 5%;
 }
 
 header {

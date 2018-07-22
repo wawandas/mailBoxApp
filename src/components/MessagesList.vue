@@ -1,5 +1,5 @@
 <template>
-    <div class="message" :class="{'new-message': isNewMessage}">
+    <div class="message" :class="{'new-message': isNewMessage, 'active': message.uid === senderUid}">
         <div @click="showMessage">
                 <p class="sender-message">from: {{ message.sender }}</p>
                 <p class="sub-message">[subject: {{ message.subject }} ]</p>
@@ -15,6 +15,7 @@ export default {
 
     props: {
         message: Object,
+        'senderUid': String,
         index: [Number, String]
     },
     methods: {
@@ -64,21 +65,24 @@ export default {
     display: inline-block;
     position: relative;
     width: 100%;
-    color: #44484B; 
-    text-indent: 10px;
+    box-sizing: border-box;
+    color: #44484B;
+    border-bottom: 1px solid #E5E5E5;
+    text-indent: 30px;
     padding: 10px 0;
 }
 
 .message p {
     padding: 0;
+    font-size: 14px;
 }
 
 .message:hover {
     cursor: pointer;
 }
 
-.message:first-child {
-    
+.message:last-child {
+    border-width: 0;
 }
 
 .message .remove-message {
@@ -87,15 +91,15 @@ export default {
 } 
 
 .new-message {
-    color: #fff;
+    color: #44484B;
 }
 
 .new-message .remove-message {
-    color: #fff;
-    border-color: #fff;
+    color: #44484B;
+    border-color: #44484B;
 }
 
-.date-message {
+.message p.date-message {
     position: absolute;
     bottom: 5px;
     margin-bottom: 5px;
@@ -104,7 +108,24 @@ export default {
 }
 
 .new-message {
+    /*background-color: #009DDC;*/
+}
+
+.new-message:before {
+    display: inline-block;
     background-color: #009DDC;
+    position: absolute;
+    content: '';
+    top: 13px;
+    border-radius: 2em;
+    left: 8px;
+    width: 12px;
+    height: 12px;
+} 
+
+.active {
+    background-color: #CEE5F2;
+    border-width: 0;
 }
 
 .sender-message {
@@ -132,8 +153,8 @@ export default {
 
 .remove-message:hover {
     background-color: red;
+    border-color: red;
     color: #fff;
-    border-color: #fff;
     cursor: pointer;
 }
 
